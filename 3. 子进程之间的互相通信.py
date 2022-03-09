@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import time
 from multiprocessing import Process, Queue
 def writer(q:Queue):
@@ -23,4 +24,31 @@ if __name__ == '__main__':
     time.sleep(3)
     pr.start()
     pw.join()
+=======
+import time
+from multiprocessing import Process, Queue
+def writer(q:Queue):
+    for i in ('A','B','C'):
+        print('put {} to queue'.format(i))
+        q.put(i)
+        time.sleep(1)
+
+def reader(q:Queue):
+    while True:
+        if not q.empty():
+            i = q.get()
+            print('get {} from queue'.format(i))
+            time.sleep(1)
+        else:
+            break
+
+if __name__ == '__main__':
+    q = Queue(10)
+    pw = Process(target=writer,args=(q,))
+    pr = Process(target=reader,args=(q,))
+    pw.start()
+    time.sleep(3)
+    pr.start()
+    pw.join()
+>>>>>>> e2c43e045d170dddd8b48902e123096581e081ef
     pr.join()
